@@ -96,7 +96,9 @@ public final class GradleDataObject extends MultiDataObject {
     public GradleDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException {
         super(pf, loader);
 
-        getCookieSet().add(new GradleDataEditor());
+        registerEditor(GRADLE_MIME_TYPE, true);
+        getLookup().lookup(DataEditorSupport.class).setMIMEType(GROOVY_MIME_TYPE);
+        // getCookieSet().add(new GradleDataEditor()); // temporarily disable the custom DataEditorSupport
     }
 
     @Override
@@ -110,7 +112,7 @@ public final class GradleDataObject extends MultiDataObject {
     }
 
     @MultiViewElement.Registration(
-        mimeType = GROOVY_MIME_TYPE,
+        mimeType = GRADLE_MIME_TYPE,
         displayName = "Source",
         iconBase = NbIcons.PROJECT_ICON_PATH,
         persistenceType = TopComponent.PERSISTENCE_ONLY_OPENED,
